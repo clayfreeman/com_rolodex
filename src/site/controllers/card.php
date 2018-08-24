@@ -16,11 +16,5 @@ use Joomla\CMS\MVC\Controller\BaseController;
  * The "Card" controller is responsible for facilitating Model and View logic.
  */
 class RolodexControllerCard extends BaseController {
-  /**
-   * [test description]
-   */
-  public function test() {
-    echo 'success';
-    exit;
-  }
+
 }
