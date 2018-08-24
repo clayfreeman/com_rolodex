@@ -10,9 +10,9 @@
   <layout title='COM_ROLODEX_VIEW_CARDS_READ'>
     <message><![CDATA[COM_ROLODEX_VIEW_CARDS_READ_DESC]]></message>
   </layout>
-  <fields name="request">
-    <fieldset name="request">
-      <field name="task" type="hidden" default="cards.display"/>
+  <fields name='request'>
+    <fieldset name='request'>
+      <field name='task' type='hidden' default='cards.display'/>
     </fieldset>
   </fields>
 </metadata>

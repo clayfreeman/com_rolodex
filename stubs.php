@@ -37,8 +37,8 @@ class StubGenerator extends CLIApplication {
     // Iterate over each alias in the class map to generate a stub for it
     foreach ($aliases as $alias) {
       // Write a line calling `class_alias()` to setup the alias
-      file_put_contents(JPATH_ROOT.'/stubs.php', "class_alias(".
-        var_export(strval($alias['new'] ?? ''), true).", ".
+      file_put_contents(JPATH_ROOT.'/stubs.php', 'class_alias('.
+        var_export(strval($alias['new'] ?? ''), true).', '.
         var_export(strval($alias['old'] ?? ''), true).");\n", FILE_APPEND);
       // Log the alias that was just created for debugging purposes
       $this->out($alias['old'].' -> '.$alias['new'], true);
