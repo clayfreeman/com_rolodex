@@ -1,0 +1,84 @@
+<?php declare(strict_types = 1);
+/**
+ * This file represents the "Cards" presentation layer and is responsible for
+ * handling the display of and interaction with data.
+ *
+ * @author     Clay Freeman <git@clayfreeman.com>
+ * @copyright  2018 Clay Freeman. All rights reserved.
+ * @license    GNU General Public License v3 (GPL-3.0).
+ */
+
+// namespace Joomla\Component\Rolodex\Site\View\Cards;
+
+use Joomla\CMS\HTML\HTMLHelper as HTML;
+use Joomla\CMS\MVC\View\HtmlView as BaseView;
+use Joomla\CMS\Router\Route;
+use Joomla\CMS\Uri\Uri as URI;
+
+/**
+ * The "Cards" view is a list of "Card" records from the database.
+ */
+class RolodexViewCards extends BaseView {
+  /**
+   * A possibly-filtered result set of "Card" objects from the database.
+   *
+   * @var  array
+   */
+  protected $cards;
+
+  /**
+   * A reference to the model's pagination object instance.
+   *
+   * @var  \Joomla\CMS\Pagination\Pagination
+   */
+  protected $pagination;
+
+  /**
+   * This method prepares the class instance to render a template layout.
+   *
+   * @param   string      $template  Which template should be loaded to render.
+   *
+   * @throws  \Exception             On error from the model.
+   *
+   * @return  mixed                  `string` containing the rendered template
+   *                                 on success, otherwise an `object` or `bool`
+   *                                 on failure.
+   */
+  public function display($template = NULL) {
+    // Fetch the "Cards" and pagination state from the database
+    $this->cards      = $this->get('Items');
+    $this->pagination = $this->get('Pagination');
+    // Ensure that no errors have occurred while fetching data
+    if (count($errors = $this->get('Errors')) === 0) {
+      // Set the layout manually since we only have one layout
+      $this->setLayout('read');
+      // Call the parent class implementation for this method
+      return parent::display($template);
+    } else {
+      // Throw an exception for the first error
+      foreach ($errors as $error) {
+        throw new \Exception($error);
+      }
+    }
+    // Assume an error occurred while displaying this view
+    return FALSE;
+  }
+
+  /**
+   * Fetches a link to view a single "Card" record.
+   *
+   * @param   object  $row  An object (usually from the database) containing an
+   *                        identification number (`id`) and name (`name`).
+   *
+   * @return  string        A fully rendered anchor tag for direct placement in
+   *                        a template.
+   */
+  protected function getCardViewLink(object $row): string {
+    return HTML::link(Route::_('index.php?'.URI::buildQuery([
+      'id'     => intval($row->id),
+      'option' => 'com_rolodex',
+      'task'   => 'card.display',
+      'view'   => 'card'
+    ])), $this->escape($row->name));
+  }
+}

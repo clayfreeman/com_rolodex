@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!--
+  - This is the manifest file that describes the filesystem layout and
+  - configuration of the component.
+  -
+  - @author     Clay Freeman <git@clayfreeman.com>
+  - @copyright  2018 Clay Freeman. All rights reserved.
+  - @license    GNU General Public License v3 (GPL-3.0).
+  -->
+<extension type='component' version='3.9' method='upgrade'>
+  <name>COM_ROLODEX</name>
+  <description>COM_ROLODEX_DESC</description>
+  <version>${CI_CUSTOM_VERSION}</version>
+  <author>Clay Freeman</author>
+  <authorEmail>git@clayfreeman.com</authorEmail>
+  <authorUrl>http://clayfreeman.com</authorUrl>
+  <creationDate>Aug 2018</creationDate>
+  <copyright>2018 Clay Freeman. All rights reserved.</copyright>
+  <license>GNU General Public License v3 (GPL-3.0).</license>
+  <install>
+    <sql>
+      <file driver='mysql' charset='utf8'>
+        sql/install.mysql.utf8.sql
+      </file>
+    </sql>
+  </install>
+  <uninstall>
+    <sql>
+      <file driver='mysql' charset='utf8'>
+        sql/uninstall.mysql.utf8.sql
+      </file>
+    </sql>
+  </uninstall>
+  <update>
+    <schemas>
+      <schemapath type='mysql'>sql/updates/mysql</schemapath>
+    </schemas>
+  </update>
+  <files folder='site'>
+    <filename>index.html</filename>
+    <filename>rolodex.php</filename>
+    <filename>router.php</filename>
+    <folder>controllers</folder>
+    <folder>models</folder>
+    <folder>views</folder>
+  </files>
+  <languages folder='site/language'>
+    <language tag='en-GB'>en-GB/en-GB.com_rolodex.ini</language>
+  </languages>
+  <administration>
+    <menu view='cards'>COM_ROLODEX</menu>
+    <files folder='admin'>
+      <filename>index.html</filename>
+      <filename>rolodex.php</filename>
+      <folder>controllers</folder>
+      <folder>models</folder>
+      <folder>sql</folder>
+      <folder>tables</folder>
+      <folder>views</folder>
+    </files>
+    <languages folder='admin/language'>
+      <language tag='en-GB'>en-GB/en-GB.com_rolodex.ini</language>
+      <language tag='en-GB'>en-GB/en-GB.com_rolodex.sys.ini</language>
+    </languages>
+  </administration>
+</extension>

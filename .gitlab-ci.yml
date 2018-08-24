@@ -1,0 +1,69 @@
+image: gitlab.bluewall.com:4567/bluewallweb/joomla-build-env:latest
+
+stages:
+  - prepare
+  - deploy
+  - validate
+  - release
+
+variables:
+  GIT_SUBMODULE_STRATEGY: recursive
+
+build:
+  artifacts:
+    expire_in: 1 week
+    paths:
+      - build/*.tar.gz
+  cache:
+  script:
+    - if [ -n "$CI_COMMIT_TAG" ]; then
+        export CI_CUSTOM_VERSION=$CI_COMMIT_TAG;
+      else
+        export CI_CUSTOM_VERSION=$CI_COMMIT_REF_SLUG-${CI_COMMIT_SHA:0:8};
+      fi
+    - envsubst < src/*.xml > src/*.xml.tmp && mv src/*.xml.tmp src/*.xml
+    - git config --global user.email "git@example.org"
+    - git config --global user.name  "Example User"
+    - export CI_CUSTOM_STASH=$(git stash create); [ -n "$CI_CUSTOM_STASH" ]
+    - mkdir -p build
+    - git archive -o build/"$CI_CUSTOM_VERSION".tar.gz "$CI_CUSTOM_STASH" src
+  stage: prepare
+
+to production:
+  cache:
+  dependencies:
+    - build
+    - conformance
+  only:
+    - tags
+  script:
+    - test $(curl
+        --silent "$CD_PROD_URL/index.php?option=com_continuousdelivery"
+        --form   "deployKey=$CD_PROD_DEPLOYKEY"
+        --form   $(printf '%s%s' package=@ build/*.tar.gz) | grep 'success')
+  stage: release
+
+to testing:
+  cache:
+  dependencies:
+    - build
+  except:
+    - tags
+  script:
+    - test $(curl
+        --silent "$CD_TEST_URL/index.php?option=com_continuousdelivery"
+        --form   "deployKey=$CD_TEST_DEPLOYKEY"
+        --form   $(printf '%s%s' package=@ build/*.tar.gz) | grep 'success')
+  stage: deploy
+
+conformance:
+  cache:
+    paths:
+      - joomla-cms
+      - vendor
+  script:
+    - composer install
+    - php stubs.php
+    - ./vendor/bin/phan --config-file=./.config/phan.php
+    - ./vendor/bin/phpcs --standard=./.config/phpcs.xml src
+  stage: validate
