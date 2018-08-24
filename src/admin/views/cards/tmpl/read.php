@@ -54,6 +54,7 @@ $listDir   = $this->escape($this->filterOrderDir);
 <?= HTML::_('formbehavior.chosen', 'select') ?>
 <form method='POST' id='adminForm' name='adminForm'>
   <div class="row-fluid">
+    <?php /** @phan-suppress-next-line PhanTypeMismatchArgument */ ?>
     <?= Layout::render('joomla.searchtools.default', ['view' => $this]) ?>
   </div>
   <?php if (count($this->cards) > 0) { ?>
