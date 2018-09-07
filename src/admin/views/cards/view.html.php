@@ -11,7 +11,6 @@
 // namespace Joomla\Component\Rolodex\Administrator\View\Cards;
 
 use Joomla\CMS\Factory;
-use Joomla\CMS\HTML\HTMLHelper as HTML;
 use Joomla\CMS\MVC\View\HtmlView as BaseView;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri as URI;

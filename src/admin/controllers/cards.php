@@ -11,6 +11,7 @@
 // namespace Joomla\Component\Rolodex\Administrator\Controller;
 
 use Joomla\CMS\MVC\Controller\AdminController;
+use Joomla\CMS\MVC\Controller\BaseController;
 
 /**
  * The "Cards" controller is responsible for facilitating Model and View logic.
