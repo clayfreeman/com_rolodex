@@ -34,8 +34,14 @@ class RolodexDispatcher extends Dispatcher {
       Input $input, MVCFFI $mvcffi) {
     // Call the parent constructor implementation to properly initialize
     parent::__construct($app, $input, $mvcffi);
+    // Check whether a view was supplied in the application input parameters
+    if ($this->input->get('view', FALSE) === FALSE) {
+      // Supply a default view to absolve this extension of requiring a generic
+      // controller class
+      $this->input->set('view', 'cards');
+    }
     // Check whether a task was supplied in the application input parameters
-    if ($this->input->getCmd('task', FALSE) === FALSE) {
+    if ($this->input->get('task', FALSE) === FALSE) {
       // Supply a default task of `$view`.display to absolve this extension of
       // requiring a generic controller class
       $this->input->set('task', $this->input->get('view').'.display');

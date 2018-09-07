@@ -95,7 +95,9 @@ $listDir   = $this->escape($this->filterOrderDir);
                             $row->checkedOutTime, 'cards.',
                             $userID === $row->checkedOut) ?>
               <?php } ?>
-              <?= $this->getCardUpdateLink($row) ?>
+              <a href="<?= $this->getCardUpdateLink($row) ?>">
+                <?= $this->escape($row->name) ?>
+              </a>
             </td>
             <td style='text-align: right;'>
               <?= $this->escape($row->id) ?>

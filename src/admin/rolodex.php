@@ -25,8 +25,14 @@ use Joomla\CMS\MVC\Controller\BaseController;
 (function() {
   // Fetch the client's desired class task from its request input
   $input = Factory::getApplication()->input;
+  // Check whether a view was supplied in the application input parameters
+  if ($input->get('view', FALSE) === FALSE) {
+    // Supply a default view to absolve this extension of requiring a generic
+    // controller class
+    $input->set('view', 'cards');
+  }
   // Check whether a task was supplied in the application input parameters
-  if ($input->getCmd('task', FALSE) === FALSE) {
+  if ($input->get('task', FALSE) === FALSE) {
     // Supply a default task of `$view`.display to absolve this extension of
     // requiring a generic controller class
     $input->set('task', $input->get('view').'.display');
@@ -34,7 +40,7 @@ use Joomla\CMS\MVC\Controller\BaseController;
   // Fetch an instance of the appropriate `BaseController` child class
   $controller = BaseController::getInstance('Rolodex');
   // Execute the task using the controller instance
-  $controller->execute($input->getCmd('task'));
+  $controller->execute($input->get('task'));
   // Perform any pending redirect set by the controller
   $controller->redirect();
 })();

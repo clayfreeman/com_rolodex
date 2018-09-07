@@ -10,7 +10,6 @@
 
 // namespace Joomla\Component\Rolodex\Site\View\Cards;
 
-use Joomla\CMS\HTML\HTMLHelper as HTML;
 use Joomla\CMS\MVC\View\HtmlView as BaseView;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri as URI;
@@ -74,11 +73,11 @@ class RolodexViewCards extends BaseView {
    *                        a template.
    */
   protected function getCardViewLink(object $row): string {
-    return HTML::link(Route::_('index.php?'.URI::buildQuery([
+    return Route::_('index.php?'.URI::buildQuery([
       'id'     => intval($row->id),
       'option' => 'com_rolodex',
       'task'   => 'card.display',
       'view'   => 'card'
-    ])), $this->escape($row->name));
+    ]));
   }
 }

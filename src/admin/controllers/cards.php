@@ -17,6 +17,23 @@ use Joomla\CMS\MVC\Controller\AdminController;
  */
 class RolodexControllerCards extends AdminController {
   /**
+   * Allow this controller to be used with a view.
+   *
+   * This method overrides the default implementation to circumvent the
+   * restriction placed on the `AdminController::display()` method by Joomla!
+   *
+   * @param   bool            $cachable   Whether the result of this method
+   *                                      should be cached (if enabled).
+   * @param   array           $urlparams  An array of sanitized URL parameters.
+   *
+   * @return  BaseController              `$this` to support method chaining.
+   */
+  public function display($cachable = FALSE, $urlparams = []) {
+    // Override the inherited display method to /actually/ do something
+    return BaseController::display($cachable, $urlparams);
+  }
+
+  /**
    * Fetch the model used to fetch or manipulate a "Card".
    *
    * This method is a default initializer for the parent class method with the

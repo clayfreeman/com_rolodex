@@ -121,10 +121,10 @@ class RolodexViewCards extends BaseView {
    *                        a template.
    */
   protected function getCardUpdateLink(object $row): string {
-    return HTML::link(Route::_('index.php?'.URI::buildQuery([
+    return Route::_('index.php?'.URI::buildQuery([
       'id'     => intval($row->id),
       'option' => 'com_rolodex',
       'task'   => 'card.edit'
-    ])), $this->escape($row->name));
+    ]));
   }
 }

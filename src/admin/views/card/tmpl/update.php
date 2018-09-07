@@ -31,25 +31,16 @@ use Joomla\CMS\Language\Text;
 })();
 ?>
 <form method='POST' name='adminForm' id='adminForm'>
-  <div class='form-horizontal'>
-    <fieldset class='adminform'>
-      <legend><?= Text::_('COM_ROLODEX_VIEW_CARD_DETAILS') ?></legend>
-      <div class='row-fluid'>
-        <div class='span6'>
-          <?php foreach ($this->form->getFieldset() as $field) { ?>
-            <div class='control-group'>
-              <div class='control-label'>
-                <?= $field->label ?>
-              </div>
-              <div class='controls'>
-                <?= $field->input ?>
-              </div>
-            </div>
-          <?php } ?>
-        </div>
+  <fieldset class='adminform form-horizontal'>
+    <legend>
+      <?= Text::_('COM_ROLODEX_VIEW_CARD_DETAILS') ?>
+    </legend>
+    <div class='row-fluid'>
+      <div class='span6'>
+        <?= $this->form->renderFieldset('default') ?>
       </div>
-    </fieldset>
-  </div>
+    </div>
+  </fieldset>
   <input type='hidden' name='id' value='<?= $this->escape($this->card->id) ?>'/>
   <input type='hidden' name='task' value='cards.display'/>
   <input type='hidden' name='view' value='cards'/>

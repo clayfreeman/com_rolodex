@@ -7,7 +7,7 @@
  ! @license    GNU General Public License v3 (GPL-3.0).
  !-->
 <form>
-  <fieldset>
+  <fieldset name='default'>
     <field name='published' type='radio' class='btn-group btn-group-yesno radio' label='COM_ROLODEX_CARD_COL_PUBLISHED' description='COM_ROLODEX_CARD_COL_PUBLISHED_DESC' default='1' required='1'>
       <option value='1'>JYES</option>
       <option value='0'>JNO</option>

@@ -27,7 +27,9 @@ use Joomla\CMS\Language\Text;
         <?php foreach ($this->cards as $i => $row) { ?>
           <tr>
             <td>
-              <?= $this->getCardViewLink($row) ?>
+              <a href="<?= $this->getCardViewLink($row) ?>">
+                <?= $this->escape($row->name) ?>
+              </a>
             </td>
           </tr>
         <?php } ?>

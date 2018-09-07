@@ -53,7 +53,7 @@ class RolodexModelCard extends ItemModel {
       // Set the active query for the database driver
       $db->setQuery($query);
       // Attempt to execute the query and fetch an item object
-      if ($db->execute() && ($item = $db->loadObject())) {
+      if ($item = $db->loadObject()) {
         // Return the resulting item from the database
         return $item;
       }
