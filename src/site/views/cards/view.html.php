@@ -33,6 +33,16 @@ class RolodexViewCards extends BaseView {
   protected $pagination;
 
   /**
+   * The translated page title for the current view/layout.
+   *
+   * This property is equivalent to the unescaped, translated value of the
+   * language constant 'COM_ROLODEX_VIEW_CARDS_READ'.
+   *
+   * @var  string
+   */
+  protected $title;
+
+  /**
    * This method prepares the class instance to render a template layout.
    *
    * @param   string      $template  Which template should be loaded to render.
@@ -47,20 +57,16 @@ class RolodexViewCards extends BaseView {
     // Fetch the "Cards" and pagination state from the database
     $this->cards      = $this->get('Items');
     $this->pagination = $this->get('Pagination');
-    // Ensure that no errors have occurred while fetching data
-    if (count($errors = $this->get('Errors')) === 0) {
-      // Set the layout manually since we only have one layout
-      $this->setLayout('read');
-      // Call the parent class implementation for this method
-      return parent::display($template);
-    } else {
-      // Throw an exception for the first error
-      foreach ($errors as $error) {
-        throw new \Exception($error);
-      }
-    }
-    // Assume an error occurred while displaying this view
-    return FALSE;
+    // Fetch references to Joomla's application and document object instances
+    $app = Factory::getApplication();
+    $doc = Factory::getDocument();
+    // Set the document title to the name of the current view/layout
+    $this->title = Text::_('COM_ROLODEX_VIEW_CARDS_READ');
+    $doc->setTitle($this->title.' - '.$app->get('sitename'));
+    // Set the layout manually since we only have one layout
+    $this->setLayout('read');
+    // Call the parent class implementation for this method
+    return parent::display($template);
   }
 
   /**

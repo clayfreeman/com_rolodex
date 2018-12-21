@@ -37,19 +37,19 @@ class RolodexViewCard extends BaseView {
   public function display($template = NULL) {
     // Attempt to fetch the requested item from the database
     $this->card = $this->get('Item');
-    // Ensure that no errors have occurred while fetching data
-    if (count($errors = $this->get('Errors')) === 0) {
-      // Set the layout manually since we only have one layout
-      $this->setLayout('read');
-      // Call the parent class implementation for this method
-      return parent::display($template);
-    } else {
-      // Throw an exception for the first error
-      foreach ($errors as $error) {
-        throw new \Exception($error);
-      }
+    // Check if an invalid response was retrieved from the database
+    if (!isset($this->card)) {
+      // Throw an exception since the card doesn't exist (or is unpublished)
+      throw new \Exception(Text::_('COM_ROLODEX_VIEW_CARD_404'), 404);
     }
-    // Assume an error occurred while displaying this view
-    return FALSE;
+    // Fetch references to Joomla's application and document object instances
+    $app = Factory::getApplication();
+    $doc = Factory::getDocument();
+    // Set the document title to the name of the card
+    $doc->setTitle($this->card->name.' - '.$app->get('sitename'));
+    // Set the layout manually since we only have one layout
+    $this->setLayout('read');
+    // Call the parent class implementation for this method
+    return parent::display($template);
   }
 }

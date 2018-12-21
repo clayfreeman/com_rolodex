@@ -94,20 +94,10 @@ class RolodexViewCards extends BaseView {
       'filter_order_Dir', 'asc', 'cmd');
     $this->filterForm     = $this->get('FilterForm');
     $this->activeFilters  = $this->get('ActiveFilters');
-    // Ensure that no errors have occurred while fetching data
-    if (count($errors = $this->get('Errors')) === 0) {
-      // Set the layout manually since we only have one layout
-      $this->setLayout('read');
-      // Call the parent class implementation for this method
-      return parent::display($template);
-    } else {
-      // Throw an exception for the first error
-      foreach ($errors as $error) {
-        throw new \Exception($error);
-      }
-    }
-    // Assume an error occurred while displaying this view
-    return FALSE;
+    // Set the layout manually since we only have one layout
+    $this->setLayout('read');
+    // Call the parent class implementation for this method
+    return parent::display($template);
   }
 
   /**

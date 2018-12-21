@@ -39,9 +39,10 @@ class RolodexModelCard extends ItemModel {
    */
   public function getItem(?int $id = NULL): ?object {
     // Determine whether the item ID was provided via argument or input
-    $id = $id ?? Factory::getApplication()->input->get('id', NULL, 'UINT');
+    $input = Factory::getApplication()->input;
+    $id    = $id ?? $input->get('id', NULL, 'UINT');
     // Ensure that the resulting item ID is positive
-    if (is_numeric($id) && $id > 0) {
+    if (is_numeric($id) && ($id = intval($id)) > 0) {
       // Fetch a reference to the Joomla database driver object instance
       $db = $this->getDBO();
       // Fetch a reference to a new query object instance
@@ -49,11 +50,14 @@ class RolodexModelCard extends ItemModel {
       // Prepare the query to select the item from the "Cards" table by ID
       $query->select($db->quoteName(['name', 'phone']));
       $query->from($db->quoteName('#__rolodex_cards'));
-      $query->where($db->quoteName('id').' = '.intval($id));
+      $query->where($db->quoteName('id').' = '.$id.' AND '.
+        $db->quoteName('published').' = 1');
       // Set the active query for the database driver
       $db->setQuery($query);
       // Attempt to execute the query and fetch an item object
       if ($item = $db->loadObject()) {
+        // Sanitize the item ID to be an integer
+        $item->id = intval($item->id);
         // Return the resulting item from the database
         return $item;
       }

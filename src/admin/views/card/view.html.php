@@ -61,23 +61,13 @@ class RolodexViewCard extends BaseView {
     // Fetch the requested "Card" by the provided ID
     $this->form = $this->get('Form');
     $this->card = $this->get('Item');
-    // Ensure that no errors have occurred while fetching data
-    if (count($errors = $this->get('Errors')) === 0) {
-      // Add the save buttons to the toolbar
-      $this->addToolbarSaveButtons();
-      // Hide the administrative menu while processing the form
-      Factory::getApplication()->input->set('hidemainmenu', TRUE);
-      // Determine whether to show the new or edit view
-      $this->setLayout(!isset($this->card->id) ? 'create' : 'update');
-      // Call the parent class implementation for this method
-      return parent::display($template);
-    } else {
-      // Throw an exception for the first error
-      foreach ($errors as $error) {
-        throw new \Exception($error);
-      }
-    }
-    // Assume an error occurred while displaying this view
-    return FALSE;
+    // Add the save buttons to the toolbar
+    $this->addToolbarSaveButtons();
+    // Hide the administrative menu while processing the form
+    Factory::getApplication()->input->set('hidemainmenu', TRUE);
+    // Determine whether to show the new or edit view
+    $this->setLayout(!isset($this->card->id) ? 'create' : 'update');
+    // Call the parent class implementation for this method
+    return parent::display($template);
   }
 }
