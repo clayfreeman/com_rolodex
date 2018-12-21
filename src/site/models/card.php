@@ -56,8 +56,6 @@ class RolodexModelCard extends ItemModel {
       $db->setQuery($query);
       // Attempt to execute the query and fetch an item object
       if ($item = $db->loadObject()) {
-        // Sanitize the item ID to be an integer
-        $item->id = intval($item->id);
         // Return the resulting item from the database
         return $item;
       }
