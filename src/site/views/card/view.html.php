@@ -10,6 +10,8 @@
 
 // namespace Joomla\Component\Rolodex\Site\View\Card;
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseView;
 
 /**
